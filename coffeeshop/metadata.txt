@@ -28,6 +28,7 @@ p  {
 <h2>Instance Id: $instanceId</h2>
 <h2>Hostname: $hostname</h2>
 <h2>Private IP: $localipv4</h2>
+<h2>IPv6 Address: $ipv6</h2>
 <h2>Availability Zone: $az</h2>
 <h2>-------------------------------------------------------</h2>
 <h3>
