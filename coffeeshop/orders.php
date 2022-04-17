@@ -1,4 +1,4 @@
-<?php include "../inc/dbinfo.inc"; ?>
+<?php include "./dbinfo.inc"; ?>
 <html>
 <head>
 <title>Order Here</title>

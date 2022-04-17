@@ -1,0 +1,6 @@
+<?php
+define('DB_SERVER', '$rdsendpoint');
+define('DB_USERNAME', 'dbadmin');
+define('DB_PASSWORD', 'awesomeness');
+define('DB_DATABASE', 'orderdb');
+?>
