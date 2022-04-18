@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>Metadata</title>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+</head>
+<body>
+<h1>EC2 Instance Metadata </h1>
+<h2>------------------------------------------------------</h2>
+<h2>Instance Id: $instanceId</h2>
+<h2>Instance Type: $type</h2>
+<h2>Hostname: $hostname</h2>
+<h2>Private IP: $localipv4</h2>
+<h2>IPv6 Address: $ipv6</h2>
+<h2>Availability Zone: $az</h2>
+<h2>-------------------------------------------------------</h2>
+<h3>
+<p>
+<?php
+print "The Current Date and Time is ";
+print date("h:i:s A l, F j Y.", time() + 8 * 60 * 60);
+?>
+</p>
+</h3>
+</body>
+</html>
