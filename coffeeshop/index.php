@@ -44,7 +44,7 @@
           <li> <a href="#services" class="smoothScroll">We Offer</a></li>		  
           <li> <a href="#about" class="smoothScroll"> Our Shop</a></li>
           <li> <a href="#portfolio" class="smoothScroll"> Special</a></li>
-          <li> <a href="#team" class="smoothScroll"> Chef Team</a></li>
+          <li> <a href="#contact" class="smoothScroll"> Get In Touch</a></li>
 	  <li> <a href="https://cloudwatch.amazonaws.com/dashboard.html?dashboard=ELB-ASG&context=eyJSIjoidXMtZWFzdC0xIiwiRCI6ImN3LWRiLTg3NTY5MjYwODk4MSIsIlUiOiJ1cy1lYXN0LTFfU0NUNmVEM1h0IiwiQyI6IjVxMm9xdjA2M3V2MHAydWhzdWZuMXVrZ2pzIiwiSSI6InVzLWVhc3QtMTo4MjFhYWM3Ni1iYTE0LTRiNDEtYWVhYi02ZDhkMGIzNjg1ODEiLCJNIjoiUHVibGljIn0=" class="smoothScroll" target="_blank" rel="noopener noreferrer"> Dashboard</a></li>
 	  <li> <a href="/metadata.php" class="smoothScroll" target="_blank" rel="noopener noreferrer"> Metadata</a></li>
           <li> <a href="/order.php" class="smoothScroll" target="_blank" rel="noopener noreferrer"> Order Here</a></li>
