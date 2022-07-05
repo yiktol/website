@@ -21,7 +21,7 @@ print date("h:i:s A l, F j Y.", time() + 8 * 60 * 60);
 ?>
 
 <?php 
-$region = '$az'
+$region = '$az';
 if (str_starts_with($region, 'ap-southeast-1'))  { ?>
 <img src="assets/img/singapore.svg" width="40" height="40" />
 <?php } 
