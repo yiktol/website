@@ -21,27 +21,27 @@ h3 {
 <body>
 <br>
 <h1>EC2 Instance Metadata </h1>
-<h2>Instance Id: <font color="#800000">$instanceId</font></h2>
-<h2>Instance Type: <font color="#800000">$type</font></h2>
-<h2>Hostname: <font color="#800000">$hostname</font></h2>
-<h2>Private IP: <font color="#800000">$localipv4</font></h2>
-<h2>IPv6 Address: <font color="#800000">$ipv6</font></h2>
-<h2>Availability Zone: <font color="#800000">$az</font></h2>
+<h2>Instance Id: <font color="blue">$instanceId</font></h2>
+<h2>Instance Type: <font color="blue">$type</font></h2>
+<h2>Hostname: <font color="blue">$hostname</font></h2>
+<h2>Private IP: <font color="blue">$localipv4</font></h2>
+<h2>IPv6 Address: <font color="blue">$ipv6</font></h2>
+<h2>Availability Zone: <font color="blue">$az</font></h2>
 
 <?php
 $region = "$az";
 if (strncmp($region, 'ap-southeast-1', strlen('ap-southeast-1')) === 0)  {
-    echo "<h2>Region: <font color='#800000'>Singapore (ap-southeast-1)</font></h2>";
+    echo "<h2>Region: <font color='blue'>Singapore (ap-southeast-1)</font></h2>";
     echo "<img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' />";
 } elseif (strncmp($region, 'ap-southeast-2', strlen('ap-southeast-2')) === 0)  {
-    echo "<h2>Region: <font color='#800000'>Sydney (ap-southeast-2)</font></h2>";
+    echo "<h2>Region: <font color='blue'>Sydney (ap-southeast-2)</font></h2>";
     echo "<img src='assets/img/australia.svg.png' width='320' height='160' border='1px solid #55' />";
 } else {
     echo "<img src='assets/img/aws.png' width='400' height='400' border='1px solid #55' />";
     }
 ?>
 
-<h2>-----------------------------------------------------------</h2>
+<h4>-----------------------------------------------------------------------------------------</h4>
 
 <p>
 
