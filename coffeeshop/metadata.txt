@@ -31,10 +31,10 @@ h3 {
 <?php
 $region = "$az";
 if (strncmp($region, 'ap-southeast-1', strlen('ap-southeast-1')) === 0)  {
-    echo "<h2>Region: <font color="#800000">Singapore (ap-southeast-1)</font></h2>";
+    echo "<h2>Region: <font color='#800000'>Singapore (ap-southeast-1)</font></h2>";
     echo "<img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' />";
 } elseif (strncmp($region, 'ap-southeast-2', strlen('ap-southeast-2')) === 0)  {
-    echo "<h2>Region: <font color="#800000">Sydney (ap-southeast-2)</font></h2>";
+    echo "<h2>Region: <font color='#800000'>Sydney (ap-southeast-2)</font></h2>";
     echo "<img src='assets/img/australia.svg.png' width='320' height='160' border='1px solid #55' />";
 } else {
     echo "<img src='assets/img/aws.png' width='400' height='400' border='1px solid #55' />";
