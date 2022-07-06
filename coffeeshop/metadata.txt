@@ -1,42 +1,56 @@
 <html>
 <head>
+<style>
+h1 {
+  font-family: sans-serif;
+  color: green;
+}
+h2 {
+  font-family: sans-serif;
+}
+
+h3 {
+  font-family: sans-serif;
+}
+
+</style>
+
 <title>Metadata</title>
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 </head>
 <body>
+<br>
 <h1>EC2 Instance Metadata </h1>
-<h2>---------------------------------------------------------------------</h2>
-<h2>Instance Id: $instanceId</h2>
-<h2>Instance Type: $type</h2>
-<h2>Hostname: $hostname</h2>
-<h2>Private IP: $localipv4</h2>
-<h2>IPv6 Address: $ipv6</h2>
-<h2>Availability Zone: $az</h2>
+<h2>Instance Id: <font color="#800000">$instanceId</font></h2>
+<h2>Instance Type: <font color="#800000">$type</font></h2>
+<h2>Hostname: <font color="#800000">$hostname</font></h2>
+<h2>Private IP: <font color="#800000">$localipv4</font></h2>
+<h2>IPv6 Address: <font color="#800000">$ipv6</font></h2>
+<h2>Availability Zone: <font color="#800000">$az</font></h2>
 
 <?php
 $region = "$az";
 if (strncmp($region, 'ap-southeast-1', strlen('ap-southeast-1')) === 0)  {
-    echo "<h2>Region: Singapore</h2>";
+    echo "<h2>Region: <font color="#800000">Singapore (ap-southeast-1)</font></h2>";
     echo "<img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' />";
 } elseif (strncmp($region, 'ap-southeast-2', strlen('ap-southeast-2')) === 0)  {
-    echo "<h2>Region: Sydney</h2>";
+    echo "<h2>Region: <font color="#800000">Sydney (ap-southeast-2)</font></h2>";
     echo "<img src='assets/img/australia.svg.png' width='320' height='160' border='1px solid #55' />";
 } else {
     echo "<img src='assets/img/aws.png' width='400' height='400' border='1px solid #55' />";
     }
 ?>
 
-<h2>---------------------------------------------------------------------</h2>
+<h2>-----------------------------------------------------------</h2>
 
 <p>
 
 <?php
-echo "<h3>The Current Date and Time is ";
+echo "<h4>The Current Date and Time is ";
 print date("h:i:s A l, F j Y.", time() + 8 * 60 * 60);
-echo "<h3/>";
+echo "<h4/>";
 ?>
 
 </p>
-</h3>
 </body>
 </html>
