@@ -5,36 +5,36 @@
 </head>
 <body>
 <h1>EC2 Instance Metadata </h1>
-<h2>------------------------------------------------------</h2>
+<h2>---------------------------------------------------------------------</h2>
 <h2>Instance Id: $instanceId</h2>
 <h2>Instance Type: $type</h2>
 <h2>Hostname: $hostname</h2>
 <h2>Private IP: $localipv4</h2>
 <h2>IPv6 Address: $ipv6</h2>
 <h2>Availability Zone: $az</h2>
-<?php 
-$region = '$az';
-if (str_starts_with($region, 'ap-southeast-1'))  {
-    <h2>Region: Singapore</h2><br>;
-    <img src="assets/img/singapore.svg.png" width="320" height="213" />;
-    } 
-elseif (str_starts_with($region, 'ap-southeast-2')) {
-    <h2>Region: Sydney</h2><br>;
-    <img src="assets/img/australia.svg.png" width="320" height="160" />;
+
+<?php
+$region = "$az";
+if (strncmp($region, 'ap-southeast-1', strlen('ap-southeast-1')) === 0)  {
+    echo "<h2>Region: Singapore</h2>";
+    echo "<img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' />";
+} elseif (strncmp($region, 'ap-southeast-2', strlen('ap-southeast-2')) === 0)  {
+    echo "<h2>Region: Sydney</h2>";
+    echo "<img src='assets/img/australia.svg.png' width='320' height='160' border='1px solid #55' />";
+} else {
+    echo "<img src='assets/img/aws.png' width='400' height='400' border='1px solid #55' />";
     }
-else {
-    <img src="assets/img/aws.svg.png" width="400" height="400" />;
-    } 
 ?>
-<h2>-------------------------------------------------------</h2>
-<h3>
+
+<h2>---------------------------------------------------------------------</h2>
+
 <p>
 
 <?php
-print "The Current Date and Time is ";
+echo "<h3>The Current Date and Time is ";
 print date("h:i:s A l, F j Y.", time() + 8 * 60 * 60);
+echo "<h3/>";
 ?>
-
 
 </p>
 </h3>
