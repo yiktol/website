@@ -2,15 +2,15 @@
 <head>
 <style>
 h1 {
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: green;
 }
 h2 {
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 h3 {
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 </style>
