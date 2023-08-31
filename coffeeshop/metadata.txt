@@ -28,12 +28,12 @@ h3 {
 <h2>IPv6 Address: <font color="blue">$ipv6</font></h2>
 <h2>Availability Zone: <font color="blue">$az</font></h2>
 
-<?php
+
 <?php
   echo "<h2>Region: <font color='blue'>Singapore (ap-southeast-1)</font></h2>";
   echo "<img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' />";
 ?>
-?>
+
 
 <h4>-----------------------------------------------------------------------------------------</h4>
 
