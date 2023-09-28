@@ -43,7 +43,7 @@ h3 {
 <?php
 echo "<h4>The Current Date and Time is ";
 print date("h:i:s A l, F j Y.", time() + 8 * 60 * 60);
-echo "<h4/>";
+echo "</h4>";
 ?>
 
 </p>
