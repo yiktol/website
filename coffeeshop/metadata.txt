@@ -30,12 +30,6 @@ h3 {
 <h2>Region: <font color='blue'>Singapore (ap-southeast-1)</font></h2>
 <img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' />
 
-
-<?php
-  $region = "$az";
-?>
-
-
 <h4>-----------------------------------------------------------------------------------------</h4>
 
 <p>
