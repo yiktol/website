@@ -27,29 +27,24 @@ h3 {
 <h2>Private IP: <font color="blue">$localipv4</font></h2>
 <h2>IPv6 Address: <font color="blue">$ipv6</font></h2>
 <h2>Availability Zone: <font color="blue">$az</font></h2>
-
 <?php
 
-function checkRegion($zone) {
+function checkRegion($region) {
 
-  $azsg = array("ap-southeast-1a", "ap-southeast-1b", "ap-southeast-1c");
-  $azsy = array("ap-southeast-2a", "ap-southeast-2b", "ap-southeast-2c");
-    
-  if (in_array($zone, $azsg)){ 
+
+  if ($region == 'ap-southeast-1'){ 
      	echo "<h2>Region: <font color='blue'>Singapore (ap-southeast-1)</font></h2>";
     	echo "<img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' />";
         }
-  if (in_array($zone, $azsy)){ 
+  if ($region == 'ap-southeast-2'){ 
       	echo "<h2>Region: <font color='blue'>Sydney (ap-southeast-2)</font></h2>";
-    	echo "<img src='assets/img/australia.svg.png' width='320' height='160' border='1px solid #55' />";
+    	  echo "<img src='assets/img/australia.svg.png' width='320' height='160' border='1px solid #55' />";
   		}
 }
-  
-$zone = "$az";
-checkRegion($zone);
+$region = '$REGION';
+checkRegion($region);
 
 ?>
-
 
 <h4>-----------------------------------------------------------------------------------------</h4>
 
