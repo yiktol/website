@@ -38,7 +38,7 @@ function checkRegion($region) {
         }
   if ($region == 'ap-southeast-2'){ 
       	echo "<h2>Region: <font color='blue'>Sydney (ap-southeast-2)</font></h2>";
-    	  echo "<img src='assets/img/australia.svg.png' width='320' height='160' border='1px solid #55' />";
+    	  echo "<img src='assets/img/australia.svg.png' width='320' height='200' border='1px solid #55' />";
   		}
 }
 $region = '$REGION';
