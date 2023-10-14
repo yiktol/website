@@ -55,7 +55,7 @@
    curl_setopt( $ch, CURLOPT_URL, $url . 'ipv6' );
    $ipv6 = curl_exec( $ch );
 
-   echo "<tr><td>IPv6 Address:</td><td><i>" . $ipv6 . "</i></td><tr>";
+   echo "<tr><td>Private IP:</td><td><i>" . $ipv6 . "</i></td><tr>";
 
   # Availability Zone
   curl_setopt( $ch, CURLOPT_URL, $url . 'placement/availability-zone' );
@@ -68,11 +68,11 @@
   $region = curl_exec( $ch );
 
   if ($region == 'ap-southeast-1'){
-      echo "<tr><td>Region:</td><td><i>" . $region . "</i></td><tr>";
+      echo "<tr><td>Region(Singapore):</td><td><i>" . $region . "</i></td><tr>";
       echo "<tr><td><img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' /></td><tr>";
    }
   if ($region == 'ap-southeast-2'){
-      echo "<tr><td>Region:</td><td><i>" . $region . "</i></td><tr>";
+      echo "<tr><td>Region(Australia):</td><td><i>" . $region . "</i></td><tr>";
       echo "<tr><td><img src='assets/img/australia.svg.png' width='320' height='213' border='1px solid #55' /></td><tr>";
          }
   echo "</table>";
