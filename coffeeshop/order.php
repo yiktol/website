@@ -1,6 +1,4 @@
 <?php 
-
-// include "../inc/dbinfo.inc"; 
 include 'rds.php';
 ?>
 <html>
