@@ -56,7 +56,8 @@ th {
 
 <?php
 echo "<p>The Current Date and Time is ";
-print date("h:i:s A l, F j Y.", time() + 8 * 60 * 60);
+date_default_timezone_set("Asia/Singapore");
+print date("h:i:s A l, F j Y.", time());
 echo "</p>"
 ?>
 
