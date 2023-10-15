@@ -55,7 +55,9 @@
    curl_setopt( $ch, CURLOPT_URL, $url . 'ipv6' );
    $ipv6 = curl_exec( $ch );
 
-   echo "<tr><td>IPv6 Address:</td><td><i>" . $ipv6 . "</i></td><tr>";
+   if(!isset($ipv6)) {
+      echo "<tr><td>IPv6 Address:</td><td><i>" . $ipv6 . "</i></td><tr>";
+      }
 
   # Availability Zone
   curl_setopt( $ch, CURLOPT_URL, $url . 'placement/availability-zone' );
