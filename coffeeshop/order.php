@@ -1,4 +1,8 @@
-<?php include "../inc/dbinfo.inc"; ?>
+<?php 
+
+// include "../inc/dbinfo.inc"; 
+include 'rds.php';
+?>
 <html>
 <head>
 <title>Order Here</title>
