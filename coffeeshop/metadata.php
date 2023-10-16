@@ -14,18 +14,18 @@ h3 {
 }
 
 p {
-  font-size: 25px;
+  font-size: 20px;
 }
 
 table {
   border: 0px solid;
-  font-size: 25px;
+  font-size: 20px;
   width: 60%;
   word-wrap: normal;
   table-layout: auto;
 }
 th, td {
-  padding: 15px;
+  padding: 5px;
   text-align: left;
 }
 
