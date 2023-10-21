@@ -72,43 +72,38 @@ include 'rds.php';
         <input type="text" name="NAME" placeholder="Enter Customer Name" maxlength="30" size="25" />
         </td>
         <td>
-        <input list="coffee" name="COFFEE" placeholder="Select Coffee" maxlength="15" size="15" />
-        <datalist id="coffee">
-            <option value="Flat White">
-            <option value="Americano">
-            <option value="Macchiato">
-            <option value="Cappuccino">
-            <option value="Latte">
-            <option value="Mocha">
-            <option value="Cold Brew">
-        </datalist>
+        <select list="coffee" name="COFFEE"  maxlength="15" >
+            <option value="Flat White">Flat White</option>
+            <option value="Americano">Americano</option>
+            <option value="Macchiato">Macchiato</option>
+            <option value="Cappuccino">Cappuccino</option>
+            <option value="Latte">Latte</option>
+            <option value="Mocha">Mocha</option>
+        </select>
         </td>
         <td>
-        <input list="milk" name="MILK" placeholder="Select Milk" maxlength="15" size="15" />
-        <datalist id="milk">
-            <option value="Full Cream">
-            <option value="Skinny">
-            <option value="Soy">
-            <option value="Almond">
-            <option value="Oat">
-        </datalist>
+        <select list="milk" name="MILK" placeholder="Select Milk" maxlength="15" >
+            <option value="Full Cream">Full Cream</option>
+            <option value="Skinny">Skinny</option>
+            <option value="Soy">Soy</option>
+            <option value="Almond">Almond</option>
+            <option value="Oat">Oat</option>
+        </select>
         </td>
         <td>
-        <input list="size" name="SIZE" placeholder="Select Size" maxlength="10" size="10" />
-        <datalist id="size">
-            <option value="Small">
-            <option value="Regular">
-            <option value="Large">
-        </datalist>
+        <select list="size" name="SIZE" placeholder="Select Size" maxlength="10" >
+            <option value="Small">Small</option>
+            <option value="Regular">Regular</option>
+            <option value="Large">Large</option>
+        </select>
         </td>
         <td>
-        <input list="qty" name="QTY" placeholder="Select Qty" maxlength="10" size="10" />
-        <datalist id="qty">
-            <option value="1">
-            <option value="2">
-            <option value="3">
-            <option value="4">
-        </datalist>
+        <select list="qty" name="QTY" placeholder="Select Qty" maxlength="10" >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
         </td>
         <td>
         <input type="submit" value="Order" />
