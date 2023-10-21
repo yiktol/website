@@ -27,6 +27,11 @@ include 'rds.php';
     background-color: #4CAF50;
     color: white;
 }
+.form {
+  border: 2px outset red;
+  background-color: lightblue;
+  text-align: center;
+}
 </style>
 </head>
 
@@ -57,6 +62,7 @@ include 'rds.php';
 ?>
 
 <!-- Input form -->
+<div class="form">
 <form action="<?PHP echo $_SERVER['SCRIPT_NAME'] ?>" method="POST">
     <table id="customers">
     <tr>
@@ -111,7 +117,7 @@ include 'rds.php';
     </tr>
     </table>
 </form>
-
+</div>
 <!-- Display table data. -->
 <table id="customers">
     <tr>
