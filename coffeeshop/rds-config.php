@@ -53,9 +53,7 @@ $secretName = 'RDSSecret';
 // $urlDocument = "http://169.254.169.254/latest/dynamic/instance-identity/document";
 // $document = file_get_contents($urlDocument);
 $data = json_decode($urlDocument, true);
-//$region = $data['region'];
-
-$region = 'ap-southeast-1';
+$region = $data['region'];
 
 /**
  * In this sample we only handle the specific exceptions for the 'GetSecretValue' API.
@@ -69,7 +67,7 @@ $region = 'ap-southeast-1';
 // Create a Secrets Manager Client 
 $client = new SecretsManagerClient([
     'version' => 'latest',
-    'region' => $region,
+    'region' => 'ap-southeast-1',
 ]);
 
 
@@ -139,11 +137,11 @@ if (!isset($result['DBClusterEndpoints'])) {
     die("");
 }
 
-$DB_SERVER_RW=$result['DBClusterEndpoints'][0]["Endpoint"];
+//$DB_SERVER_RW=$result['DBClusterEndpoints'][0]["Endpoint"];
 $DB_SERVER_RO=$result['DBClusterEndpoints'][1]["Endpoint"];
 
 return array(
-    'DB_SERVER' => $DB_SERVER_RW,
+    'DB_SERVER' => $DB_SERVER,
     'DB_USERNAME' => $DB_USERNAME,
     'DB_PASSWORD'=> $DB_PASSWORD,
     'DB_DATABASE'=> $DB_DATABASE,

@@ -131,7 +131,9 @@ include 'rds.php';
 
 <?php
 
-$result = mysqli_query($connection, "SELECT * FROM ORDERS");
+$connection_ro = mysqli_connect(DB_SERVER_RO, DB_USERNAME, DB_PASSWORD);
+
+$result = mysqli_query($connection_ro, "SELECT * FROM ORDERS");
 
 while($query_data = mysqli_fetch_row($result)) {
     echo "<tr>";
