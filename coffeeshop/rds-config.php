@@ -53,7 +53,9 @@ $secretName = 'RDSSecret';
 // $urlDocument = "http://169.254.169.254/latest/dynamic/instance-identity/document";
 // $document = file_get_contents($urlDocument);
 $data = json_decode($urlDocument, true);
-$region = $data['region'];
+//$region = $data['region'];
+
+$region = 'ap-southeast-1';
 
 /**
  * In this sample we only handle the specific exceptions for the 'GetSecretValue' API.
