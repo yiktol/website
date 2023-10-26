@@ -33,6 +33,7 @@
 require 'aws-autoloader.php';
 
 use Aws\SecretsManager\SecretsManagerClient; 
+use Aws\Rds\RdsClient;
 use Aws\Exception\AwsException;
 
 // Name of secret containing the database connection information
@@ -110,11 +111,41 @@ $DB_PASSWORD=$secret['password'];
 // define('DB_DATABASE', $DB_DATABASE);
  
 
+$clusterId = 'auroradb';
+
+// Create a Secrets Manager Client
+$client = new RdsClient([
+    'version' => 'latest',
+    'region' => $region,
+]);
+
+
+try {
+    $result = $client->describeDBClusterEndpoints([
+        'DBClusterIdentifier' => $clusterId,
+    ]);
+
+} catch (AwsException $e) {
+    $error = $e->getAwsErrorCode();
+    echo "Error: ".$error."<br/>";
+    die("");
+}
+
+
+if (!isset($result['DBClusterEndpoints'])) {
+    echo "Error: Unable to retrieve endpoint";
+    die("");
+}
+
+$DB_SERVER_RW=$result['DBClusterEndpoints'][0]["Endpoint"];
+$DB_SERVER_RO=$result['DBClusterEndpoints'][1]["Endpoint"];
+
 return array(
-    'DB_SERVER' => $DB_SERVER,
+    'DB_SERVER' => $DB_SERVER_RW,
     'DB_USERNAME' => $DB_USERNAME,
     'DB_PASSWORD'=> $DB_PASSWORD,
     'DB_DATABASE'=> $DB_DATABASE,
+    'DB_SERVER_RO' => $DB_SERVER_RO,
 ); 
 
 ?>
