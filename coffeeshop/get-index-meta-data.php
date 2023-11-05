@@ -49,7 +49,7 @@
   curl_setopt( $ch, CURLOPT_URL, $url . 'local-ipv4' );
   $localipv4 = curl_exec( $ch );
 
-  echo "<tr><td>Private IP:</td><td><i>" . $localipv4 . "</i></td><tr>";
+  echo "<tr><td>IPv4 Address:</td><td><i>" . $localipv4 . "</i></td><tr>";
 
   # IPv6
    curl_setopt( $ch, CURLOPT_URL, $url . 'ipv6' );
