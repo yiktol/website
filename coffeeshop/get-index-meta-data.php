@@ -67,13 +67,16 @@
   curl_setopt( $ch, CURLOPT_URL, $url . 'placement/region' );
   $region = curl_exec( $ch );
 
-  if ($region == 'ap-southeast-1'){
-      echo "<tr><td>Region(Singapore):</td><td><i>" . $region . "</i></td><tr>";
-      echo "<tr><td><img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' /></td><tr>";
-   }
-  if ($region == 'ap-southeast-2'){
-      echo "<tr><td>Region(Australia):</td><td><i>" . $region . "</i></td><tr>";
-      echo "<tr><td><img src='assets/img/australia.svg.png' width='320' height='213' border='1px solid #55' /></td><tr>";
-         }
+  echo "<tr><td>Region:</td><td><i>" . $region . "</i></td><tr>";
+  echo "<tr><td><img src='assets/img/$region.png' width='250' height='125' border='1px solid #55' /></td><tr>";
+
+//   if ($region == 'ap-southeast-1'){
+//       echo "<tr><td>Region(Singapore):</td><td><i>" . $region . "</i></td><tr>";
+//       echo "<tr><td><img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' /></td><tr>";
+//    }
+//   if ($region == 'ap-southeast-2'){
+//       echo "<tr><td>Region(Australia):</td><td><i>" . $region . "</i></td><tr>";
+//       echo "<tr><td><img src='assets/img/australia.svg.png' width='320' height='213' border='1px solid #55' /></td><tr>";
+//          }
   echo "</table>";
 ?>
