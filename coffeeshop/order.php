@@ -5,38 +5,112 @@ include 'rds.php';
 <head>
 <title>Order Here</title>
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-#customers {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
+* {
+  box-sizing: border-box;
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  margin-top: 5px;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 50%;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
     width: 100%;
-    table-layout: fixed;
+    margin-top: 0;
+  }
 }
 
-#customers td, #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
+
+.orders {
+  border-radius: 5px;
+  padding: 20px;
+  width: 50%;
 }
 
-#customers tr:nth-child(even){background-color: #f2f2f2;}
-#customers tr:hover {background-color: #ddd;}
-#customers th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
 }
-.form {
-  border: 2px outset red;
-  background-color: lightblue;
-  text-align: center;
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 </style>
+
+
+<script>
+function validateForm() {
+  var x = document.forms["orderform"]["NAME"].value;
+  if (x == "" || x == null) {
+    alert("Name must be filled out");
+    return false;
+  }
+}
+</script>
 </head>
 
 <body>
-<h1>Orders</h1>
+<h1>Order Form</h1>
 <?php
 
     /* Connect to MySQL and select the database. */
@@ -62,22 +136,21 @@ include 'rds.php';
 ?>
 
 <!-- Input form -->
-<div class="form">
-<form action="<?PHP echo $_SERVER['SCRIPT_NAME'] ?>" method="POST">
-    <table id="customers">
-    <tr>
-        <td>NAME</td>
-        <td>COFFEE</td>
-        <td>MILK</td>
-        <td>SIZE</td>
-        <td>QTY</td>
-        <td>SUBMIT</td>
-    </tr>
-    <tr>
-        <td>
-        <input type="text" name="NAME" placeholder="Enter Customer Name" maxlength="30" size="25" />
-        </td>
-        <td>
+<div class="container">
+	<form name="orderform" action="<?PHP echo $_SERVER['SCRIPT_NAME'] ?>" method="POST" onsubmit="return validateForm()" required>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">First Name</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="name" name="NAME" placeholder="Your name..">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="coffee">Coffee</label>
+      </div>
+      <div class="col-75">
         <select list="coffee" name="COFFEE"  maxlength="15" >
             <option value="Flat White">Flat White</option>
             <option value="Americano">Americano</option>
@@ -85,9 +158,14 @@ include 'rds.php';
             <option value="Cappuccino">Cappuccino</option>
             <option value="Latte">Latte</option>
             <option value="Mocha">Mocha</option>
-        </select>
-        </td>
-        <td>
+          </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="milk">Milk</label>
+      </div>
+      <div class="col-75">
         <select list="milk" name="MILK" placeholder="Select Milk" maxlength="15" >
             <option value="Full Cream">Full Cream</option>
             <option value="Skinny">Skinny</option>
@@ -95,63 +173,69 @@ include 'rds.php';
             <option value="Almond">Almond</option>
             <option value="Oat">Oat</option>
         </select>
-        </td>
-        <td>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="size">Size</label>
+      </div>
+      <div class="col-75">
         <select list="size" name="SIZE" placeholder="Select Size" maxlength="10" >
             <option value="Small">Small</option>
             <option value="Regular">Regular</option>
             <option value="Large">Large</option>
         </select>
-        </td>
-        <td>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="quantity">Quantity</label>
+      </div>
+      <div class="col-75">
         <select list="qty" name="QTY" placeholder="Select Qty" maxlength="10" >
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
         </select>
-        </td>
-        <td>
-        <input type="submit" value="Order" />
-        </td>
-    </tr>
-    </table>
-</form>
+      </div>
+    </div>
+    <div class="row">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
 </div>
 <!-- Display table data. -->
-<table id="customers">
-    <tr>
-    <td>ID</td>
-    <td>NAME</td>
-    <td>COFFEE</td>
-    <td>MILK</td>
-    <td>SIZE</td>
-    <td>QTY</td>
-    </tr>
+<h2>Orders</h2>
+<div class="orders">
+    <table id="ordertable">
+        <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>COFFEE</th>
+        <th>MILK</th>
+        <th>SIZE</th>
+        <th>QTY</th>
+        </tr>
 
-<?php
+    <?php
 
-$connectionro = mysqli_connect(DB_SERVER_RO, DB_USERNAME, DB_PASSWORD);
+    $result = mysqli_query($connection, "SELECT * FROM ORDERS");
 
-if (mysqli_connect_errno()) echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    while($query_data = mysqli_fetch_row($result)) {
+        echo "<tr>";
+        echo "<td>",$query_data[0], "</td>",
+            "<td>",$query_data[1], "</td>",
+            "<td>",$query_data[2], "</td>",
+            "<td>",$query_data[3], "</td>",
+            "<td>",$query_data[4], "</td>",
+            "<td>",$query_data[5], "</td>";
+        echo "</tr>";
+    }
+    ?>
 
-$database = mysqli_select_db($connectionro, DB_DATABASE);
-
-$result = mysqli_query($connectionro, "SELECT * FROM ORDERS");
-
-while($query_data = mysqli_fetch_row($result)) {
-    echo "<tr>";
-    echo "<td>",$query_data[0], "</td>",
-        "<td>",$query_data[1], "</td>",
-        "<td>",$query_data[2], "</td>",
-        "<td>",$query_data[3], "</td>",
-        "<td>",$query_data[4], "</td>",
-        "<td>",$query_data[5], "</td>";
-    echo "</tr>";
-}
-?>
-
-</table>
+    </table>
+</div>
 
 <!-- Clean up. -->
 <?php
