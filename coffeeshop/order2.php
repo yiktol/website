@@ -100,7 +100,7 @@ tr:nth-child(even) {
 
 <script>
 function validateForm() {
-  var x = document.forms["orderform"]["firstname"].value;
+  var x = document.forms["orderform"]["NAME"].value;
   if (x == "" || x == null) {
     alert("Name must be filled out");
     return false;
@@ -110,7 +110,7 @@ function validateForm() {
 </head>
 
 <body>
-<h1>Orders</h1>
+<h1>Order Form</h1>
 <?php
 
     /* Connect to MySQL and select the database. */
@@ -143,7 +143,7 @@ function validateForm() {
         <label for="fname">First Name</label>
       </div>
       <div class="col-75">
-        <input type="text" id="fname" name="firstname" placeholder="Your name..">
+        <input type="text" id="name" name="NAME" placeholder="Your name..">
       </div>
     </div>
     <div class="row">
@@ -206,6 +206,7 @@ function validateForm() {
   </form>
 </div>
 <!-- Display table data. -->
+<h2>Orders</h2>
 <div class="orders">
     <table id="ordertable">
         <tr>
