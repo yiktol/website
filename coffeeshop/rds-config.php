@@ -67,7 +67,7 @@ $region = $data['region'];
 // Create a Secrets Manager Client 
 $client = new SecretsManagerClient([
     'version' => 'latest',
-    'region' => 'ap-southeast-1',
+    'region' => $region,
 ]);
 
 
@@ -111,41 +111,40 @@ $DB_PASSWORD=$secret['password'];
 // define('DB_DATABASE', $DB_DATABASE);
  
 
-$clusterId = 'auroradb';
+// $clusterId = 'auroradb';
 
-// Create a Secrets Manager Client
-$client = new RdsClient([
-    'version' => 'latest',
-    'region' => $region,
-]);
-
-
-try {
-    $result = $client->describeDBClusterEndpoints([
-        'DBClusterIdentifier' => $clusterId,
-    ]);
-
-} catch (AwsException $e) {
-    $error = $e->getAwsErrorCode();
-    echo "Error: ".$error."<br/>";
-    die("");
-}
+// $client = new RdsClient([
+//     'version' => 'latest',
+//     'region' => $region,
+// ]);
 
 
-if (!isset($result['DBClusterEndpoints'])) {
-    echo "Error: Unable to retrieve endpoint";
-    die("");
-}
+// try {
+//     $result = $client->describeDBClusterEndpoints([
+//         'DBClusterIdentifier' => $clusterId,
+//     ]);
+
+// } catch (AwsException $e) {
+//     $error = $e->getAwsErrorCode();
+//     echo "Error: ".$error."<br/>";
+//     die("");
+// }
+
+
+// if (!isset($result['DBClusterEndpoints'])) {
+//     echo "Error: Unable to retrieve endpoint";
+//     die("");
+// }
 
 //$DB_SERVER_RW=$result['DBClusterEndpoints'][0]["Endpoint"];
-$DB_SERVER_RO=$result['DBClusterEndpoints'][1]["Endpoint"];
+// $DB_SERVER_RO=$result['DBClusterEndpoints'][1]["Endpoint"];
 
 return array(
     'DB_SERVER' => $DB_SERVER,
     'DB_USERNAME' => $DB_USERNAME,
     'DB_PASSWORD'=> $DB_PASSWORD,
     'DB_DATABASE'=> $DB_DATABASE,
-    'DB_SERVER_RO' => $DB_SERVER_RO,
+    // 'DB_SERVER_RO' => $DB_SERVER_RO,
 ); 
 
 ?>
