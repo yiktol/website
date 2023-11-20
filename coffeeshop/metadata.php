@@ -1,40 +1,6 @@
 <html>
 <head>
-<style>
-h1 {
-  font-family: Arial, Helvetica, sans-serif;
-  color: green;
-}
-h2 {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-h3 {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-p {
-  font-size: 20px;
-}
-
-table {
-  border: 0px solid;
-  font-size: 20px;
-  width: 60%;
-  word-wrap: normal;
-  table-layout: auto;
-}
-th, td {
-  padding: 5px;
-  text-align: left;
-}
-
-th {
-  background-color: #04AA6D;
-  color: white;
-  height: 40px;
-}
-</style>
+<link rel="stylesheet" href="assets/css/coffee.css">
 
 <title>Metadata</title>
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
@@ -42,16 +8,26 @@ th {
 <body>
 <br>
 
-<div align="left">
-<?php include("get-index-meta-data.php"); ?>
-</div>
 
-<div align="left">
+<div class="row">
+        <div class="leftcolumn">
+
+            <div class="header">
+                <h2>Instance Metadata</h2>
+            </div>
+
+            <div class="card">
+
+
+<?php include("get-index-meta-data.php"); ?>
+
+
 <?php include("get-cpu-load.php"); ?>
 </div>
+            <hr />
 
 
-<hr />
+            <div class="header">
 
 
 <?php
@@ -61,6 +37,9 @@ print date("h:i:s A l, F j Y.", time());
 echo "</p>"
 ?>
 
-
+</div>
+        </div>
+        
+    </div>
 </body>
 </html>

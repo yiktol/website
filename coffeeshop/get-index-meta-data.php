@@ -39,6 +39,12 @@
 
   echo "<tr><td>Instance Type:</td><td><i>" . $type . "</i></td><tr>";
 
+  # Instant Type
+  curl_setopt( $ch, CURLOPT_URL, $url . 'ami-id' );
+  $ami = curl_exec( $ch );
+
+  echo "<tr><td>Instance Type:</td><td><i>" . $ami . "</i></td><tr>";
+
   # Hostname
   curl_setopt( $ch, CURLOPT_URL, $url . 'hostname' );
   $hostname = curl_exec( $ch );
