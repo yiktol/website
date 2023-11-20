@@ -39,11 +39,11 @@
 
   echo "<tr><td>Instance Type:</td><td><i>" . $type . "</i></td><tr>";
 
-  # Instant Type
+  # AMI Id
   curl_setopt( $ch, CURLOPT_URL, $url . 'ami-id' );
   $ami = curl_exec( $ch );
 
-  echo "<tr><td>Instance Type:</td><td><i>" . $ami . "</i></td><tr>";
+  echo "<tr><td>AMI Id:</td><td><i>" . $ami . "</i></td><tr>";
 
   # Hostname
   curl_setopt( $ch, CURLOPT_URL, $url . 'hostname' );
@@ -76,13 +76,5 @@
   echo "<tr><td>Region:</td><td><i>" . $region . "</i></td><tr>";
   echo "<tr><td><img src='assets/img/$region.png' width='250' height='125' border='1px solid #55' /></td><tr>";
 
-//   if ($region == 'ap-southeast-1'){
-//       echo "<tr><td>Region(Singapore):</td><td><i>" . $region . "</i></td><tr>";
-//       echo "<tr><td><img src='assets/img/singapore.svg.png' width='320' height='213' border='1px solid #55' /></td><tr>";
-//    }
-//   if ($region == 'ap-southeast-2'){
-//       echo "<tr><td>Region(Australia):</td><td><i>" . $region . "</i></td><tr>";
-//       echo "<tr><td><img src='assets/img/australia.svg.png' width='320' height='213' border='1px solid #55' /></td><tr>";
-//          }
   echo "</table>";
 ?>
