@@ -24,7 +24,7 @@
 
 <?php include("get-cpu-load.php"); ?>
 </div>
-            <hr />
+           
 
 
             <div class="header">
