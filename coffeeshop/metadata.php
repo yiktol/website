@@ -21,7 +21,7 @@
             </div>
                 
             <hr>
-            <div class="feader">
+            <div class="header">
 
             <?php
             echo "<p>The Current Date and Time is ";
