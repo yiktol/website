@@ -20,7 +20,8 @@
                 <?php include("get-cpu-load.php"); ?>
             </div>
                 
-            <div class="footer">
+            <hr>
+            <div class="feader">
 
             <?php
             echo "<p>The Current Date and Time is ";
