@@ -6,10 +6,7 @@
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 </head>
 <body>
-<br>
-
-
-<div class="row">
+    <div class="row">
         <div class="leftcolumn">
 
             <div class="header">
@@ -18,28 +15,22 @@
 
             <div class="card">
 
+                <?php include("get-index-meta-data.php"); ?>
 
-<?php include("get-index-meta-data.php"); ?>
+                <?php include("get-cpu-load.php"); ?>
+            </div>
+                
+            <div class="footer">
 
+            <?php
+            echo "<p>The Current Date and Time is ";
+            date_default_timezone_set("Asia/Singapore");
+            print date("h:i:s A l, F j Y.", time());
+            echo "</p>"
+            ?>
 
-<?php include("get-cpu-load.php"); ?>
-</div>
-           
-
-
-            <div class="header">
-
-
-<?php
-echo "<p>The Current Date and Time is ";
-date_default_timezone_set("Asia/Singapore");
-print date("h:i:s A l, F j Y.", time());
-echo "</p>"
-?>
-
-</div>
+            </div>
         </div>
-        
     </div>
 </body>
 </html>
