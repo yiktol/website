@@ -206,7 +206,7 @@ function validateForm() {
   </form>
 </div>
 <!-- Display table data. -->
-<h2>Orders</h2>
+<h2>Orders (Aurora Database)</h2>
 <div class="orders">
     <table id="ordertable">
         <tr>
