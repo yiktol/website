@@ -1,80 +1,141 @@
 <?php
-  $ch = curl_init();
+// Initialize curl session
+$ch = curl_init();
 
-  // get a valid TOKEN
-  $headers = array (
-        'X-aws-ec2-metadata-token-ttl-seconds: 60' );
-  $url = "http://169.254.169.254/latest/api/token";
+/**
+ * Fetch AWS EC2 instance metadata
+ * 
+ * @param resource $curlHandler The curl handle
+ * @param string $path The metadata path to fetch
+ * @param array $headers Headers to include in the request
+ * @return string The response from the metadata service
+ */
+function fetchMetadata($curlHandler, $path, $headers) {
+    $baseUrl = 'http://169.254.169.254/latest/';
+    $fullUrl = $baseUrl . $path;
+    
+    curl_setopt($curlHandler, CURLOPT_URL, $fullUrl);
+    curl_setopt($curlHandler, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curlHandler, CURLOPT_CUSTOMREQUEST, "GET");
+    
+    return curl_exec($curlHandler);
+}
 
-  curl_setopt( $ch, CURLOPT_URL, $url );
-  curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-  curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-  curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "PUT" );
-  curl_setopt( $ch, CURLOPT_URL, $url );
-  $token = curl_exec( $ch );
+// Get a valid token for metadata service
+$tokenHeaders = ['X-aws-ec2-metadata-token-ttl-seconds: 60'];
+$tokenUrl = "http://169.254.169.254/latest/api/token";
 
-  echo "<table>";
-  echo "<tr><th>MetaData</th><th>Value</th></tr>";
+curl_setopt($ch, CURLOPT_URL, $tokenUrl);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $tokenHeaders);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+$token = curl_exec($ch);
 
-  #The URL root is the AWS meta data service URL where metadata
-  # requests regarding the running instance can be made
-  # $urlRoot="http://169.254.169.254/latest/meta-data/";
+// Set headers for metadata requests
+$headers = ['X-aws-ec2-metadata-token: ' . $token];
 
-  # Get the instance ID from meta-data and print to the screen
-  $headers = array (
-        'X-aws-ec2-metadata-token: '.$token );
-  $url="http://169.254.169.254/latest/meta-data/";
+// Define metadata to retrieve
+$metadataItems = [
+    'instance-id' => 'Instance ID',
+    'instance-type' => 'Instance Type',
+    'ami-id' => 'AMI ID',
+    'hostname' => 'Hostname',
+    'local-ipv4' => 'IPv4 Address',
+    'ipv6' => 'IPv6 Address',
+    'placement/availability-zone' => 'Availability Zone',
+    'placement/region' => 'Region'
+];
 
-  curl_setopt( $ch, CURLOPT_URL, $url . 'instance-id' );
-  curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-  curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-  curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "GET" );
-  $result = curl_exec( $ch );
+// Get metadata values
+$metadataValues = [];
+foreach ($metadataItems as $path => $label) {
+    $metadataValues[$path] = fetchMetadata($ch, 'meta-data/' . $path, $headers);
+}
 
-  echo "<tr><td>InstanceId:</td><td><i>" . $result . "</i></td><tr>";
-
-  # Instant Type
-  curl_setopt( $ch, CURLOPT_URL, $url . 'instance-type' );
-  $type = curl_exec( $ch );
-
-  echo "<tr><td>Instance Type:</td><td><i>" . $type . "</i></td><tr>";
-
-  # AMI Id
-  curl_setopt( $ch, CURLOPT_URL, $url . 'ami-id' );
-  $ami = curl_exec( $ch );
-
-  echo "<tr><td>AMI Id:</td><td><i>" . $ami . "</i></td><tr>";
-
-  # Hostname
-  curl_setopt( $ch, CURLOPT_URL, $url . 'hostname' );
-  $hostname = curl_exec( $ch );
-
-  echo "<tr><td>Hostname:</td><td><i>" . $hostname . "</i></td><tr>";
-
-  # Private IPv4
-  curl_setopt( $ch, CURLOPT_URL, $url . 'local-ipv4' );
-  $localipv4 = curl_exec( $ch );
-
-  echo "<tr><td>IPv4 Address:</td><td><i>" . $localipv4 . "</i></td><tr>";
-
-  # IPv6
-   curl_setopt( $ch, CURLOPT_URL, $url . 'ipv6' );
-   $ipv6 = curl_exec( $ch );
-   
-   echo "<tr><td>IPv6 Address:</td><td><i>" . $ipv6 . "</i></td><tr>";
-
-  # Availability Zone
-  curl_setopt( $ch, CURLOPT_URL, $url . 'placement/availability-zone' );
-  $az = curl_exec( $ch );
-
-  echo "<tr><td>Availability Zone:</td><td><i>" . $az . "</i></td><tr>";
-
-  # Region
-  curl_setopt( $ch, CURLOPT_URL, $url . 'placement/region' );
-  $region = curl_exec( $ch );
-
-  echo "<tr><td>Region:</td><td><i>" . $region . "</i></td><tr>";
-  echo "<tr><td><img src='assets/img/$region.png' width='250' height='125' border='1px solid #55' /></td><tr>";
-
-  echo "</table>";
+// Close curl session
+curl_close($ch);
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AWS Instance Metadata</title>
+    <style>
+        body {
+            font-family: 'Amazon Ember', Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f8f8;
+            color: #232f3e;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #232f3e;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eaeded;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th {
+            background-color: #232f3e;
+            color: white;
+            text-align: left;
+            padding: 12px;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #eaeded;
+            text-align: left;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .region-img {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .aws-orange {
+            color: #ff9900;
+        }
+        i {
+            font-style: normal;
+            color: #0073bb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <th>Metadata</th>
+                <th>Value</th>
+            </tr>
+            <?php foreach ($metadataItems as $path => $label): ?>
+            <tr>
+                <td><?= $label ?>:</td>
+                <td><i><?= $metadataValues[$path] ?: 'Not available' ?></i></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        
+        <?php if (!empty($metadataValues['placement/region'])): ?>
+        <div class="region-img">
+            <img src="assets/img/<?= $metadataValues['placement/region'] ?>.png" 
+                 alt="<?= $metadataValues['placement/region'] ?> Region" 
+                 width="250" height="125" 
+                 style="border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <?php endif; ?>
+    </div>
+</body>
+</html>
