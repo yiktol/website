@@ -1,21 +1,5 @@
 <?php
-/**
- * Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * This file is licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License. A copy of
- * the License is located at
- *
- * http://aws.amazon.com/apache2.0/
- *
- * This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
- * CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- *
- * If you need more information about configurations or implementing the sample code, visit the AWS docs:
- * https://aws.amazon.com/developers/getting-started/php/
- *
- */
+
   $ch = curl_init();
 
   // get a valid TOKEN
@@ -49,27 +33,15 @@ $secretName = 'RDSSecret';
   curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "GET" );
   $urlDocument = curl_exec( $ch );
 
-// Link local data provides information bout this instance  
-// $urlDocument = "http://169.254.169.254/latest/dynamic/instance-identity/document";
-// $document = file_get_contents($urlDocument);
+// Parse instance metadata to get region
 $data = json_decode($urlDocument, true);
 $region = $data['region'];
-
-/**
- * In this sample we only handle the specific exceptions for the 'GetSecretValue' API.
- * See https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
- * We rethrow the exception by default.
- *
- * This code expects that you have AWS credentials set up per:
- * https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials.html
- */
 
 // Create a Secrets Manager Client 
 $client = new SecretsManagerClient([
     'version' => 'latest',
     'region' => $region,
 ]);
-
 
 try {
     $result = $client->getSecretValue([
@@ -82,69 +54,59 @@ try {
     die("");
 }
 
-//
-// Decrypts secret using the associated KMS CMK.
-// Depending on whether the secret is a string or binary, one of these fields will be populated.
+// Check if we can retrieve the secret string
 if (!isset($result['SecretString'])) {
     echo "Error: Unable to retrieve secret";
     die("");
 }
 
-$secret=json_decode($result['SecretString'], true);
-#echo $secret;
+$secret = json_decode($result['SecretString'], true);
 
-#$secret= json_decode($secret_json, true);
 // Provide values for DB connection
-$DB_SERVER=$secret['host'];
-$DB_DATABASE=$secret['dbname'];
-$DB_USERNAME=$secret['username'];
-$DB_PASSWORD=$secret['password'];
+$DB_SERVER = $secret['host'];
+$DB_DATABASE = $secret['dbname'];
+$DB_USERNAME = $secret['username'];
+$DB_PASSWORD = $secret['password'];
 
-// echo $DB_SERVER; echo "<br/>";
-// echo $RDS_DB; echo "<br/>";
-// echo $RDS_user; echo "<br/>";
-// echo $RDS_pwd;
+// Create RDS client to get reader endpoint for Aurora cluster
+$rdsClient = new RdsClient([
+    'version' => 'latest',
+    'region' => $region,
+]);
 
-// define('DB_SERVER', $DB_SERVER);
-// define('DB_USERNAME', $DB_USERNAME);
-// define('DB_PASSWORD', $DB_PASSWORD);
-// define('DB_DATABASE', $DB_DATABASE);
- 
+// For Aurora clusters, the host is the cluster endpoint
+// Extract the cluster identifier from the endpoint
+// Format: cluster-name.cluster-xxxxxxxxx.region.rds.amazonaws.com
+$hostParts = explode('.', $DB_SERVER);
+$clusterIdentifier = $hostParts[0];
 
-// $clusterId = 'auroradb';
-
-// $client = new RdsClient([
-//     'version' => 'latest',
-//     'region' => $region,
-// ]);
-
-
-// try {
-//     $result = $client->describeDBClusterEndpoints([
-//         'DBClusterIdentifier' => $clusterId,
-//     ]);
-
-// } catch (AwsException $e) {
-//     $error = $e->getAwsErrorCode();
-//     echo "Error: ".$error."<br/>";
-//     die("");
-// }
-
-
-// if (!isset($result['DBClusterEndpoints'])) {
-//     echo "Error: Unable to retrieve endpoint";
-//     die("");
-// }
-
-//$DB_SERVER_RW=$result['DBClusterEndpoints'][0]["Endpoint"];
-// $DB_SERVER_RO=$result['DBClusterEndpoints'][1]["Endpoint"];
+// Get the reader endpoint from Aurora cluster
+try {
+    $result = $rdsClient->describeDBClusters([
+        'DBClusterIdentifier' => $clusterIdentifier
+    ]);
+    
+    // Aurora clusters have a specific reader endpoint
+    if (isset($result['DBClusters'][0]['ReaderEndpoint'])) {
+        $DB_SERVER_RO = $result['DBClusters'][0]['ReaderEndpoint'];
+    } else {
+        // Fallback to writer endpoint if reader endpoint isn't available
+        $DB_SERVER_RO = $DB_SERVER;
+    }
+} catch (AwsException $e) {
+    // If the cluster isn't found or any other error, fall back to writer endpoint
+    $DB_SERVER_RO = $DB_SERVER;
+    
+    // Optionally log the error
+    // error_log("Error retrieving Aurora cluster reader endpoint: " . $e->getMessage());
+}
 
 return array(
     'DB_SERVER' => $DB_SERVER,
     'DB_USERNAME' => $DB_USERNAME,
     'DB_PASSWORD'=> $DB_PASSWORD,
     'DB_DATABASE'=> $DB_DATABASE,
-    // 'DB_SERVER_RO' => $DB_SERVER_RO,
+    'DB_SERVER_RO' => $DB_SERVER_RO,
 ); 
 
 ?>

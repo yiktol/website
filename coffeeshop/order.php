@@ -2,8 +2,11 @@
 include 'rds.php';
 
 // Database connection management
-function connectToDatabase() {
-    $connection = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+function connectToDatabase($isReadOnly = false) {
+    // Use read-only server for read operations
+    $server = $isReadOnly ? DB_SERVER_RO : DB_SERVER;
+    
+    $connection = mysqli_connect($server, DB_USERNAME, DB_PASSWORD);
     
     if (mysqli_connect_errno()) {
         throw new Exception("Failed to connect to MySQL: " . mysqli_connect_error());
@@ -43,7 +46,7 @@ function tableExists($tableName, $connection, $dbName) {
     return (mysqli_num_rows($checktable) > 0);
 }
 
-// Add an order to the table
+// Add an order to the table - WRITE OPERATION
 function addOrder($connection, $name, $coffee, $milk, $size, $qty) {
     $n = mysqli_real_escape_string($connection, $name);
     $c = mysqli_real_escape_string($connection, $coffee);
@@ -61,7 +64,7 @@ function addOrder($connection, $name, $coffee, $milk, $size, $qty) {
     return true;
 }
 
-// Get orders with pagination
+// Get orders with pagination - READ OPERATION
 function getOrders($connection, $page = 1, $ordersPerPage = 15) {
     $offset = ($page - 1) * $ordersPerPage;
     
@@ -77,7 +80,7 @@ function getOrders($connection, $page = 1, $ordersPerPage = 15) {
     return $orders;
 }
 
-// Count total orders for pagination
+// Count total orders for pagination - READ OPERATION
 function countTotalOrders($connection) {
     $result = mysqli_query($connection, "SELECT COUNT(*) AS total FROM ORDERS");
     $row = mysqli_fetch_assoc($result);
@@ -86,7 +89,8 @@ function countTotalOrders($connection) {
 
 // Process form submission
 $orderSubmitted = false;
-$connection = null;
+$writeConnection = null;
+$readConnection = null;
 $orders = [];
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $ordersPerPage = 15;
@@ -94,8 +98,12 @@ $totalOrders = 0;
 $totalPages = 0;
 
 try {
-    $connection = connectToDatabase();
-    verifyOrdersTable($connection);
+    // Use write connection for table verification (potential table creation)
+    $writeConnection = connectToDatabase(false);
+    verifyOrdersTable($writeConnection);
+    
+    // Use read connection for fetching data
+    $readConnection = connectToDatabase(true);
     
 	// Process form submission
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -111,7 +119,8 @@ try {
 			
 			if (!empty($name)) {
 				try {
-					$orderSubmitted = addOrder($connection, $name, $coffee, $milk, $size, $qty);
+                    // Use write connection for inserting data
+					$orderSubmitted = addOrder($writeConnection, $name, $coffee, $milk, $size, $qty);
 					// Don't return all orders, just confirm success
 					echo json_encode(['success' => true]);
 				} catch (Exception $e) {
@@ -132,27 +141,31 @@ try {
         $qty = isset($_POST['QTY']) ? htmlentities($_POST['QTY']) : '';
         
         if (!empty($name)) {
-            $orderSubmitted = addOrder($connection, $name, $coffee, $milk, $size, $qty);
+            // Use write connection for inserting data
+            $orderSubmitted = addOrder($writeConnection, $name, $coffee, $milk, $size, $qty);
         }
     }
     
-    // Get orders with pagination
-    $totalOrders = countTotalOrders($connection);
+    // Get orders with pagination - Use read connection
+    $totalOrders = countTotalOrders($readConnection);
     $totalPages = ceil($totalOrders / $ordersPerPage);
     
     // Ensure current page is valid
     if ($currentPage < 1) $currentPage = 1;
     if ($totalPages > 0 && $currentPage > $totalPages) $currentPage = $totalPages;
     
-    // Get all orders for the current page
-    $orders = getOrders($connection, $currentPage, $ordersPerPage);
+    // Get all orders for the current page - Use read connection
+    $orders = getOrders($readConnection, $currentPage, $ordersPerPage);
     
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();
 } finally {
-    // Clean up database connection
-    if ($connection) {
-        mysqli_close($connection);
+    // Clean up database connections
+    if ($writeConnection) {
+        mysqli_close($writeConnection);
+    }
+    if ($readConnection) {
+        mysqli_close($readConnection);
     }
 }
 ?>
